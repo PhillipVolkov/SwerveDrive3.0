@@ -60,6 +60,7 @@ public class PIDSubsystem extends Subsystem {
   public boolean reversed;
   private final AHRS navX;
   public double resetE = 0;
+  public int passed360 = 0;
 
   public double p, i, d, iz, ff, max, min;
   //public OI m_oi;
@@ -279,6 +280,10 @@ public class PIDSubsystem extends Subsystem {
       heading = navX.getAngle(); 
     }
 
+    if(module >= 0 && module <= 3) {
+      heading*=encoderConversionFactor;
+    }
+
     if (heading < 0) {
       //System.out.println(360 - (Math.abs(heading) % 360));
       return 360 - (Math.abs(heading) % 360);
@@ -370,12 +375,12 @@ public class PIDSubsystem extends Subsystem {
           rotations = -Math.atan(turn/forward)*180/Math.PI;
         }
       }
-      if(rotations < 90) {
-        rotations += 180;
+      if((rotations-getHeading(0)) < -180) {
+        rotations += 360;
         reversed = true;
       }
-      else if(rotations > 90) {
-        rotations -= 180;
+      else if((rotations-getHeading(0)) > 180) {
+        rotations -= 360;
         reversed = true;
       }
       else {
@@ -388,6 +393,9 @@ public class PIDSubsystem extends Subsystem {
         accel *= -1;
       }
 
+      passed360 = Math.toIntExact(Math.round(getHeading(0)-(getHeading(0)%360))/360);
+
+      rotations += 360*passed360;
       rotations = (360 - rotations) / encoderConversionFactor;
     }
   }
