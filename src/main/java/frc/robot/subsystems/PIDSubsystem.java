@@ -81,24 +81,27 @@ public class PIDSubsystem extends Subsystem {
     rearRightDrive = new CANSparkMax(RobotMap.rightRearDrive, MotorType.kBrushless);
     
     navX = new AHRS(SPI.Port.kMXP);
-    /**
-     * The restoreFactoryDefaults method can be used to reset the configuration parameters
-     * in the SPARK MAX to their factory default state. If no argument is passed, these
-     * parameters will not persist between power cycles
-     */
-    frontLeftAngle.restoreFactoryDefaults();
-    frontRightAngle.restoreFactoryDefaults();
-    rearLeftAngle.restoreFactoryDefaults();
-    rearRightAngle.restoreFactoryDefaults();
+
+    //frontLeftAngle.restoreFactoryDefaults();
+    //frontRightAngle.restoreFactoryDefaults();
+    //rearLeftAngle.restoreFactoryDefaults();
+    //rearRightAngle.restoreFactoryDefaults();
 
     frontLeftAngle.setSmartCurrentLimit(60);
     frontLeftDrive.setSmartCurrentLimit(60);
+    frontLeftDrive.setClosedLoopRampRate(0.5);
+
     frontRightAngle.setSmartCurrentLimit(60);
     frontRightDrive.setSmartCurrentLimit(60);
+    frontRightDrive.setClosedLoopRampRate(0.5);
+
     rearLeftAngle.setSmartCurrentLimit(60);
     rearLeftDrive.setSmartCurrentLimit(60);
+    rearLeftDrive.setClosedLoopRampRate(0.5);
+
     rearRightAngle.setSmartCurrentLimit(60);
     rearRightDrive.setSmartCurrentLimit(60);
+    rearRightDrive.setClosedLoopRampRate(0.5);
     /**
      * In order to use PID functionality for a controller, a CANPIDController object
      * is constructed by calling the getPIDController() method on an existing
