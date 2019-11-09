@@ -23,7 +23,7 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 
 /**
@@ -50,6 +50,8 @@ public class PIDSubsystem extends Subsystem {
   private CANSparkMax frontRightDrive;
   private CANSparkMax rearLeftDrive;
   private CANSparkMax rearRightDrive;
+
+  public PowerDistributionPanel pdp;
 
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
   public double rotations;
@@ -88,6 +90,15 @@ public class PIDSubsystem extends Subsystem {
     frontRightAngle.restoreFactoryDefaults();
     rearLeftAngle.restoreFactoryDefaults();
     rearRightAngle.restoreFactoryDefaults();
+
+    frontLeftAngle.setSmartCurrentLimit(60);
+    frontLeftDrive.setSmartCurrentLimit(60);
+    frontRightAngle.setSmartCurrentLimit(60);
+    frontRightDrive.setSmartCurrentLimit(60);
+    rearLeftAngle.setSmartCurrentLimit(60);
+    rearLeftDrive.setSmartCurrentLimit(60);
+    rearRightAngle.setSmartCurrentLimit(60);
+    rearRightDrive.setSmartCurrentLimit(60);
     /**
      * In order to use PID functionality for a controller, a CANPIDController object
      * is constructed by calling the getPIDController() method on an existing
